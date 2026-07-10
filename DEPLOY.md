@@ -30,6 +30,32 @@ DATABASE_URL=postgresql://...  (opcional)
 NEXT_PUBLIC_APP_URL=https://seu-dominio.vercel.app
 ```
 
+## Deploy na Netlify
+
+### 1. Conectar o repositório
+- Acesse [app.netlify.com](https://app.netlify.com) → **Add new site** → **Import an existing project**
+- Escolha o GitHub e selecione o repositório `giuseppeBertholdi/VIBE-Projeto2026`
+- A Netlify detecta o `netlify.toml` automaticamente (build command `npm run build`, plugin `@netlify/plugin-nextjs`)
+
+### 2. Variáveis de Ambiente (Site settings → Environment variables)
+```
+OPENAI_API_KEY=sk-...
+DATABASE_URL=postgresql://...  (opcional)
+NEXT_PUBLIC_APP_URL=https://seu-site.netlify.app
+ADMIN_SECRET=um-segredo-seu
+```
+
+### 3. Deploy
+- Clique em **Deploy site** — a Netlify builda e publica automaticamente a cada push na branch `main`
+
+### Alternativa via CLI
+```bash
+npm i -g netlify-cli
+netlify login
+netlify init
+netlify deploy --prod
+```
+
 ## Desenvolvimento Local
 ```bash
 cd museum-ai
