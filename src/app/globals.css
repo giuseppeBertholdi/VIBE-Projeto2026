@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* ─────────────────────────────────────────
+   V.I.B.E. — Editorial / Institutional Design System
+   (inspired by counterpublic.org: warm paper,
+   restrained accents, hairlines, generous air)
+───────────────────────────────────────── */
+
+:root {
+  --vibe-paper:   #F3EEE1;  /* warm paper background */
+  --vibe-surface: #E9E1CE;  /* recessed panel surface */
+  --vibe-ink:     #1B1811;  /* primary ink (text) */
+
+  /* kept for backward-compatible usage across components */
+  --vibe-black:   var(--vibe-ink);
+  --vibe-white:   var(--vibe-ink);
+
+  --vibe-yellow:  #E3AE49;  /* ochre — primary accent */
+  --vibe-pink:    #A63D2B;  /* brick red — secondary accent */
+  --vibe-cyan:    #2F6F62;  /* deep teal — tertiary accent */
+
+  --border:        1px solid rgba(27,24,17,0.16);
+  --border-yellow: 1.5px solid var(--vibe-yellow);
+  --border-cyan:   1.5px solid var(--vibe-cyan);
+  --border-pink:   1.5px solid var(--vibe-pink);
+
+  --shadow:        0 2px 10px rgba(27,24,17,0.08);
+  --shadow-yellow: 0 2px 14px rgba(227,174,73,0.35);
+  --shadow-cyan:   0 2px 14px rgba(47,111,98,0.3);
+  --shadow-pink:   0 2px 14px rgba(166,61,43,0.3);
+  --shadow-lg:     0 10px 28px rgba(27,24,17,0.14);
+  --shadow-lg-y:   0 10px 28px rgba(227,174,73,0.4);
+
+  --background: var(--vibe-paper);
+  --foreground: var(--vibe-ink);
+}
+
+/* ── Editorial utilities ── */
+.brut-border   { border: var(--border); }
+.brut-shadow   { box-shadow: var(--shadow); }
+.brut-card {
+  border: var(--border);
+  box-shadow: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.brut-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(27,24,17,0.32);
+}
+.brut-card:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow);
+}
+
+.brut-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  cursor: pointer;
+  border-radius: 999px;
+}
+.brut-btn:hover  { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.brut-btn:active { transform: translateY(0);   box-shadow: var(--shadow); opacity: 0.9; }
+
+.brut-btn-yellow { background: var(--vibe-yellow); color: var(--vibe-ink); }
+.brut-btn-white  { background: var(--vibe-ink);    color: var(--vibe-paper); }
+.brut-btn-ghost  {
+  background: transparent;
+  color: var(--vibe-ink);
+  border: 1.5px solid rgba(27,24,17,0.3);
+  box-shadow: none;
+}
+.brut-btn-ghost:hover { box-shadow: none; border-color: var(--vibe-ink); }
+
+.brut-btn-cyan {
+  background: transparent;
+  color: var(--vibe-cyan);
+  border: var(--border-cyan);
+  box-shadow: none;
+}
+.brut-btn-cyan:hover  { transform: translateY(-2px); box-shadow: var(--shadow-cyan); }
+.brut-btn-cyan:active { transform: translateY(0); box-shadow: none; }
+
+.brut-btn-pink {
+  background: var(--vibe-pink);
+  color: var(--vibe-paper);
+  border: none;
+  box-shadow: none;
+}
+.brut-btn-pink:hover  { transform: translateY(-2px); box-shadow: var(--shadow-pink); }
+.brut-btn-pink:active { transform: translateY(0); box-shadow: none; opacity: 0.9; }
+
+.brut-tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+}
+
+/* ── Label / section number ── */
+.vibe-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(27,24,17,0.45);
+}
+
+/* ── Editorial display headlines ── */
+.vibe-serif {
+  font-family: var(--font-serif, Georgia, serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ── Diagonal stripe background ── */
+.stripe-bg {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 12px,
+    rgba(27,24,17,0.025) 12px,
+    rgba(27,24,17,0.025) 13px
+  );
+}
+
+/* ── Scrolling marquee ticker ── */
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  animation: marquee 20s linear infinite;
+  white-space: nowrap;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── Accessibility ─────────── */
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/fonts/OpenDyslexic-Regular.otf");
+  font-weight: normal;
+  font-display: swap;
+}
+
+[data-dyslexia="true"] body,
+[data-dyslexia="true"] p,
+[data-dyslexia="true"] h1,
+[data-dyslexia="true"] h2,
+[data-dyslexia="true"] h3,
+[data-dyslexia="true"] li,
+[data-dyslexia="true"] span {
+  font-family: "OpenDyslexic", sans-serif !important;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+  line-height: 1.8;
+}
+
+[data-font-size="sm"] body { font-size: 14px; }
+[data-font-size="md"] body { font-size: 16px; }
+[data-font-size="lg"] body { font-size: 18px; }
+[data-font-size="xl"] body { font-size: 20px; }
+
+[data-high-contrast="true"] body {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+[data-reduced-motion="true"] * {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+html { scroll-behavior: smooth; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(227,174,73,0.4); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(227,174,73,0.65); }
+
+:focus-visible {
+  outline: 2px solid var(--vibe-yellow);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 9999;
+  background: var(--vibe-yellow);
+  color: var(--vibe-black);
+  padding: 8px 16px;
+  font-weight: 800;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
