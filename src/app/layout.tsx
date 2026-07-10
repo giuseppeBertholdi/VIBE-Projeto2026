@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 import { AccessibilityProvider } from "@/hooks/useAccessibility";
+import { Footer } from "@/components/layout/Footer";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <AccessibilityProvider>
           {children}
+          <Footer />
         </AccessibilityProvider>
       </body>
     </html>
