@@ -2,5 +2,10 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  # NEXT_PUBLIC_* vars are meant to be embedded in client-side build output —
+  # that's not a secret leak, so exclude it from Netlify's secrets scanner.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_APP_URL"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
