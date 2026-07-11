@@ -1,17 +1,23 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { getStore } from "@netlify/blobs";
 import { Donation } from "@/types";
 
-// NOTE: this persists to a JSON file on the local filesystem. That works for
-// local development but Vercel's serverless filesystem is ephemeral — writes
-// here will NOT survive across deploys/cold starts in production. Before
-// shipping this for real, swap this module's implementation for the
-// `Donation` model in prisma/schema.prisma backed by a real Postgres DATABASE_URL.
+// Netlify Functions run on a read-only filesystem, so local JSON-file
+// storage only works for `npm run dev`. In production (Netlify sets the
+// NETLIFY env var), persist to Netlify Blobs instead — durable across
+// deploys and cold starts, no database required.
+const isNetlify = Boolean(process.env.NETLIFY);
 
 const DATA_DIR = path.join(process.cwd(), ".data");
 const DATA_FILE = path.join(DATA_DIR, "donations.json");
+const BLOB_KEY = "donations.json";
 
 async function readAll(): Promise<Donation[]> {
+  if (isNetlify) {
+    const raw = await getStore("donations").get(BLOB_KEY, { type: "text" });
+    return raw ? (JSON.parse(raw) as Donation[]) : [];
+  }
   try {
     const raw = await fs.readFile(DATA_FILE, "utf-8");
     return JSON.parse(raw) as Donation[];
@@ -21,6 +27,10 @@ async function readAll(): Promise<Donation[]> {
 }
 
 async function writeAll(donations: Donation[]): Promise<void> {
+  if (isNetlify) {
+    await getStore("donations").set(BLOB_KEY, JSON.stringify(donations));
+    return;
+  }
   await fs.mkdir(DATA_DIR, { recursive: true });
   await fs.writeFile(DATA_FILE, JSON.stringify(donations, null, 2), "utf-8");
 }
